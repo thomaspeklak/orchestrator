@@ -1,0 +1,19 @@
+{
+  "name": "orchastrator",
+  "version": "0.0.0",
+  "description": "Synchronizes browser windows",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "Thomas Peklak <thomas.peklak@gmail.com>",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "shoe": "0.0.15",
+    "mux-demux": "~3.7.8",
+    "node-uuid": "~1.4.1",
+    "browserify": "~2.35.1",
+    "reconnect": "~1.5.2",
+    "multi-channel-mdm": "~0.5.1"
+  }
+}
