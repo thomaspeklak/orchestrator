@@ -1,0 +1,14 @@
+extends layout
+
+block content
+    h1 Orchastrator
+    p Start a session
+    form(action="/", method="POST")
+        p
+            label Key
+                input(name="key")
+        p
+            button(type=submit) Start
+    if currentUrl
+        p
+            a(href="#{currentUrl}") Join current session
