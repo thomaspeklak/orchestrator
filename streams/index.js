@@ -18,11 +18,7 @@ function connectToStream(session, stream) {
             console.log("new session");
             m = new Model();
             streams[session] = m;
-            m.on("update", function () {console.dir(m.toJSON());});
             m.on("end", function () {console.log("ended");});
-            setInterval(function () {
-                m.set("r", Math.random());
-            }, 1000);
         }
 
         console.log("new browser attached");
