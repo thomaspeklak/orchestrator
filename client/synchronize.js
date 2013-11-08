@@ -1,8 +1,15 @@
 "use strict";
 var Model = require("scuttlebutt/model");
 
-module.ecports = function synchronize(stream) {
-    var state = new Model();
+var state = new Model();
+module.exports = function synchronize(stream) {
 
-    stream.pipe(state.createStream()).pipe(stream);
+window.state = state;
+    var s = state.createStream();
+    s.pipe(stream).pipe(s);
+    s.resume();
+
+    state.on("update", function () {
+        console.log("update");
+    });
 };

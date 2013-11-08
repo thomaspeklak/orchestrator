@@ -1,26 +1,31 @@
 "use strict";
-var reconnect = require("reconnect/shoe");
 var cookie = require("cookie");
 var synchronize = require("./synchronize");
+var shoe = require("shoe");
+var muxDemux = require("mux-demux");
+
 
 var cookies = cookie.parse(document.cookie);
 
 
 if ("orchastrator" in cookies) {
-    reconnect(function(stream) {
-        stream.write(cookies.orchastrator);
+    var stream = shoe("/socket");
 
-        stream.on("data", function verify(data) {
-            if (data == "accepted") {
-                stream.removeListener("data", verify);
+    var mdm = muxDemux();
 
-                synchronize(stream);
-            }
-        });
+    stream.pipe(mdm).pipe(stream);
 
-        stream.on("end", function (data) {
-            console.dir(data);
-        });
+    var verify = mdm.createStream("verify");
+    verify.write(cookies.orchastrator);
 
-    }).connect("/socket");
+    verify.on("data", function (data) {
+        if (data != "verified") return;
+
+        var model = mdm.createStream("model");
+        synchronize(model);
+    });
+
+    stream.on("end", function (data) {
+        console.dir(data);
+    });
 }

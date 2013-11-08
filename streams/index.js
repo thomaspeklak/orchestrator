@@ -3,6 +3,8 @@
 var shoe = require("shoe");
 var PassThrough = require("stream").PassThrough;
 var cookieSignature = require("cookie-signature");
+var Model = require("scuttlebutt/model");
+var muxDemux = require("mux-demux");
 
 var db = require("../db");
 var config = require("../config");
@@ -11,33 +13,60 @@ var streams = {};
 
 function connectToStream(session, stream) {
     return function () {
-        if (!streams[session]) {
-            streams[session] = new PassThrough();
+        var m = streams[session];
+        if (!m) {
+            console.log("new session");
+            m = new Model();
+            streams[session] = m;
+            m.on("update", function () {console.dir(m.toJSON());});
+            m.on("end", function () {console.log("ended");});
+            setInterval(function () {
+                m.set("r", Math.random());
+            }, 1000);
         }
 
-        stream.write("accepted");
-        stream.pipe(streams[session]).pipe(stream);
+        console.log("new browser attached");
+        var s = m.createStream();
+        s.pipe(stream).pipe(s);
+
+        stream.on("end", function() {console.log("client stream ended");});
     };
 }
 
 module.exports = function (server) {
-
     var sock = shoe(function (stream) {
-        stream.once("data", function verify(data) {
-            var session = cookieSignature.unsign(data.replace(/.*?:/, ""), config.secret);
-            if (!session) {
-                stream.end(new Error("no active session"));
+        var session;
+        var mdm = muxDemux(function (stream) {
+            if (stream.meta == "model") {
+                if (!session) return;
+                return connectToStream(session, stream)();
             }
 
-            db.sessions.get(session, function (err, data) {
-                if (err) {
-                    return stream.end(err.message);
-                }
-                db.streams.put(session, {
-                    lastAccessed: new Date()
-                }, connectToStream(data.key, stream));
-            });
+            if (stream.meta == "verify") {
+                stream.once("data", function verify(data) {
+                    var sessionCookie = cookieSignature.unsign(data.replace(/.*?:/, ""), config.secret);
+                    if (!sessionCookie) {
+                        stream.end(new Error("no active session"));
+                    }
+
+                    db.sessions.get(sessionCookie, function (err, data) {
+                        if (err) {
+                            return stream.end(err.message);
+                        }
+
+                        db.streams.put(sessionCookie, {
+                            lastAccessed: new Date()
+                        }, function (err) {
+                            if (err) return mdm.end();
+
+                            session = sessionCookie;
+                            stream.write("verified");
+                        });
+                    });
+                });
+            }
         });
+        mdm.pipe(stream).pipe(mdm);
     });
     sock.install(server, "/socket");
 };
