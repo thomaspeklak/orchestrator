@@ -55,7 +55,7 @@ module.exports = function (server) {
                         }, function (err) {
                             if (err) return mdm.end();
 
-                            session = sessionCookie;
+                            session = data.key;
                             stream.write("verified");
                         });
                     });
