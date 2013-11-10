@@ -2,6 +2,7 @@
 var Model = require("scuttlebutt/model");
 var EventSynchronizer = require("./event-synchronizer");
 var ScrollEventSynchronizer = require("./scroll-event-synchronizer");
+var LocationEventSynchronizer = require("./location-event-synchronizer");
 
 var state = new Model();
 
@@ -13,5 +14,6 @@ module.exports = function synchronize(stream) {
     s.pipe(stream).pipe(s);
 
     synchronizer.register(ScrollEventSynchronizer);
+    synchronizer.register(LocationEventSynchronizer);
 };
 
