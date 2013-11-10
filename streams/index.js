@@ -1,7 +1,6 @@
 "use strict";
 
 var shoe = require("shoe");
-var PassThrough = require("stream").PassThrough;
 var cookieSignature = require("cookie-signature");
 var Model = require("scuttlebutt/model");
 var muxDemux = require("mux-demux");
