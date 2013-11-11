@@ -18,6 +18,16 @@
             <a href="#test3">Anchor 3</a>
         </nav>
     </header>
+    <section id="interaction">
+        <h1>Interaction targets</h1>
+
+        <span id="click">Click</span>
+        <span id="mouseover">Mouseover</span>
+        <span id="mouseout">Mouseout</span>
+        <span id="mouseenter">Mouseenter</span>
+        <span id="mouseleave">Mouseleave</span>
+        <span id="mousedown">Mousedown</span>
+        <span id="mouseup">Mouseup</span>
     <ol>
         <li>
             <h2 id="test1">Anchor 1</h2>
@@ -338,6 +348,20 @@
     <footer>
         a footer
     </footer>
+    <script type="text/javascript">
+        (function () {
+        function r() {
+            return 255- parseInt(Math.random() * 100, 10);
+        }
+        [].forEach.call(
+            document.querySelectorAll("#interaction span"),
+            function (el) {
+                el.addEventListener(el.id, function () {
+                    this.style.backgroundColor = "rgb("+ r() + "," + r() + "," + r() + ")";
+                });
+            });
+        }());
+    </script>
     <script src="/application.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>

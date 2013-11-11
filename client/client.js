@@ -24,6 +24,6 @@ if ("orchastrator" in cookies) {
     });
 
     stream.on("end", function (data) {
-        console.dir(data);
+        console.log(data);
     });
 }

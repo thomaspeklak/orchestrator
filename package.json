@@ -23,6 +23,7 @@
     "watchify": "~0.3.0",
     "cookie-signature": "~1.0.1",
     "scuttlebutt": "~5.6.8",
-    "lodash": "~2.2.1"
+    "lodash": "~2.2.1",
+    "get-query-selector": "0.0.1"
   }
 }
