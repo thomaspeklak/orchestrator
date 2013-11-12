@@ -1,0 +1,8 @@
+body {
+    font: normal 14px "Lucida Grande", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: lightgoldenrodyellow;
+}
+
+h1, h2, h3, h4 {
+    text-shadow: -2px 2px 0 #fff;
+}
