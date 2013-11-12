@@ -28,7 +28,8 @@
     "scuttlebutt": "~5.6.8",
     "shoe": "0.0.15",
     "uglifyify": "~1.0.1",
-    "watchify": "~0.3.0"
+    "watchify": "~0.3.0",
+    "passport-local": "~0.1.6"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
