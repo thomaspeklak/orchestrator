@@ -1,7 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    background: #f8f9fa;
+    background: #f8f9fa url(/logo.png) 0 0 no-repeat;
     font: normal 14px "Lucida Grande", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
