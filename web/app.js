@@ -6,6 +6,14 @@ var config = require("../config");
 var LeveldbStore = require("connect-leveldb")(express);
 var db = require("../db");
 
+var levelUserDb = require("level-userdb")(db.users);
+var helpers = require('level-userdb-passport')(levelUserDb);
+var LocalStrategy = require('passport-local').LocalStrategy;
+
+Passport.use(new LocalStrategy({usernameField:'email'}, helpers.localStrategyVerify))
+
+
+
 var app = express();
 
 // Express settings
