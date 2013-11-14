@@ -10,9 +10,14 @@ This product is in an early stage, expect everything to change.
 #Installation and first steps
 
 ```bash
+#install dependencies
 npm install
+
+#make a user
+node tools/createUser.js admin holySecret 1
+
+#run the server
 node .
 ```
 
-Then navigate to http://localhost:3000 type define a key for your session. Go to http://localhost:3000/test.html .Then do the same in another browser or window.
-
+Then navigate to http://localhost:3000 and login with the user you just created. Go to http://localhost:3000/test.html. Then do the same in another browser or window and enjoy the synchronization.
