@@ -1,20 +1,54 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
+    "use strict";
 
     grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
+        pkg: grunt.file.readJSON("package.json"),
         uglify: {
             options: {
-                banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
+                banner: "/*! <%= pkg.name %> <%= grunt.template.today('dd-mm-yyyy') %> */\n"
             },
             dist: {
                 files: {
-                    'public/application.min.js': ['public/application.js']
+                    "public/application.min.js": ["public/application.js"]
                 }
             }
         },
+        browserify: {
+            dev: {
+                options: {
+                    debug: true
+                },
+                files: {
+                    "public/application-dev.js": ["client/client.js"]
+                }
+            },
+            dist: {
+                options: {
+                    debug: false
+                },
+                files: {
+                    "public/application.js": ["client/client.js"]
+                }
+            }
+        },
+        watch: {
+            css: {
+                files: "public/styles.css",
+                options: {
+                    livereload: true
+                }
+            },
+            browserify: {
+                files: "client/**/*.js",
+                tasks: ["browserify:dev"]
+            },
+        }
     });
 
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.registerTask('default', ['uglify']);
+    grunt.loadNpmTasks("grunt-contrib-watch");
+    grunt.loadNpmTasks("grunt-contrib-uglify");
+    grunt.loadNpmTasks("grunt-browserify");
 
+    grunt.registerTask("default", ["browserify:dev", "watch"]);
+    grunt.registerTask("build", ["browserify:dist", "uglify"]);
 };

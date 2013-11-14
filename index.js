@@ -9,6 +9,3 @@ server.listen(parseInt(process.argv[2], 10) || parseInt(process.env.PORT, 10) |
 
 streams(server);
 
-if(process.env.NODE_ENV !== "production") {
-    //require("./frontend-watch-task.js")();
-}

@@ -2,3 +2,6 @@ node_modules
 npm-debug.log
 db/orchastrator
 .DS_Store
+public/application-dev.js
+public/application.js
+public/application.min.js
