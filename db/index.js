@@ -10,6 +10,5 @@ var levelUserDb = require("level-userdb")(userDb);
 module.exports = {
     sessions: db.sublevel("sessions", { valueEncoding: "json" }),
     streams: db.sublevel("streams", { valueEncoding: "json" }),
-    users: levelUserDb,
-    userDb: userDb
+    users: levelUserDb
 };

@@ -4,3 +4,7 @@ extends ../layout
 block content
     h1 Orchastrator
     p Session started
+
+    if location
+        p Current session location:
+            a(href=location)= location

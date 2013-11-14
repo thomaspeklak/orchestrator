@@ -2,6 +2,8 @@ extends layout
 
 block content
     h1 Orchastrator
+    if info
+        p.info= info
     if error
         p.error= error
     p Start a session
