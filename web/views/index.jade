@@ -1,6 +1,10 @@
 extends layout
 
 block content
+    if info.length
+        p.info= info
+    if error.length
+        p.error= error
     p Orchestrator allows you to synchronize your browser. Scrolling, navgating and mouse events are propagated to all connected browsers. 
     section
         h1 Start a new session
