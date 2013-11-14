@@ -2,11 +2,16 @@ extends layout
 
 block content
     h1 Orchastrator
+    if error
+        p.error= error
     p Start a session
     form(action="/", method="POST")
         p
-            label Key
-                input(name="key")
+            label Username
+                input(name="username")
+        p
+            label Password
+                input(name="password", type="password")
         p
             button(type=submit) Start
     if currentUrl

@@ -2,19 +2,21 @@
 
 var path = require("path");
 var express = require("express");
+var flash = require("connect-flash");
 var config = require("../config");
 var LeveldbStore = require("connect-leveldb")(express);
 var db = require("../db");
 
-var levelUserDb = require("level-userdb")(db.users);
-var helpers = require('level-userdb-passport')(levelUserDb);
-var LocalStrategy = require('passport-local').LocalStrategy;
-
-Passport.use(new LocalStrategy({usernameField:'email'}, helpers.localStrategyVerify))
-
-
+var helpers = require("level-userdb-passport")(db.users);
+var LocalStrategy = require("passport-local").Strategy;
+var passport = require("passport");
+passport.use(new LocalStrategy({}, helpers.localStrategyVerify));
+passport.deserializeUser(helpers.deserializeUser);
+passport.serializeUser(helpers.serializeUser);
 
 var app = express();
+
+app.passport = passport;
 
 // Express settings
 app.disable("x-powered-by");
@@ -38,10 +40,10 @@ app.configure(function () {
         layout: false
     });
 
-    //app.use(express.logger());
     app.use(express.json());
     app.use(express.urlencoded());
     app.use(express.methodOverride());
+    app.use(flash());
 
     app.use(express.cookieParser(config.secret));
 
@@ -58,6 +60,8 @@ app.configure(function () {
         key: "orchastrator"
     }));
 
+    app.use(passport.initialize());
+    app.use(passport.session());
     app.use(app.router);
     app.use(express.static(path.join(__dirname, "..", "public")));
 });
