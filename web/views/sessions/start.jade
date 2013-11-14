@@ -3,3 +3,7 @@ extends ../layout
 
 block content
     p Session started
+
+    if location
+        p Current session location:
+            a(href=location)= location
