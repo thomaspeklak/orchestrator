@@ -22,10 +22,22 @@ function InteractionEventSynchronizer(state) {
 
 InteractionEventSynchronizer.prototype.register = function registerInteractionEventSynchronizer(apply) {
     return apply("interaction", function (event) {
-        var customEvent = new CustomEvent(event.type, {detail: {synchronizationEvent: true}});
+        var customEvent = new CustomEvent(event.type, {
+            detail: {
+                synchronizationEvent: true
+            }
+        });
         var node = document.querySelector(event.selector);
 
-        node.dispatchEvent(customEvent);
+        if (node.dispatchEvent) {
+            node.dispatchEvent(customEvent);
+        } else if (node.fireEvent) { // IE < 9
+            node.fireEvent("on" + customEvent.eventType, customEvent);
+        } else if (node[event.type]) {
+            node[event.type]();
+        } else if (node["on" + event.type]) {
+            node["on" + event.type]();
+        }
     });
 };
 
