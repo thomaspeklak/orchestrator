@@ -9,7 +9,7 @@ module.exports = function (grunt) {
             },
             dist: {
                 files: {
-                    "public/application.min.js": ["public/application.js"]
+                    "public/orchestrator.min.js": ["public/orchestrator.js"]
                 }
             }
         },
@@ -19,7 +19,7 @@ module.exports = function (grunt) {
                     debug: true
                 },
                 files: {
-                    "public/application-dev.js": ["client/client.js"]
+                    "public/orchestrator-dev.js": ["client/client.js"]
                 }
             },
             dist: {
@@ -27,7 +27,7 @@ module.exports = function (grunt) {
                     debug: false
                 },
                 files: {
-                    "public/application.js": ["client/client.js"]
+                    "public/orchestrator.js": ["client/client.js"]
                 }
             }
         },
