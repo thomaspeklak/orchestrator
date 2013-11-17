@@ -70,7 +70,7 @@ app.configure(function () {
     app.use(express.session({
         store: levelDbStore,
         secret: config.secret,
-        cookie: {httpOnly: false},
+        cookie: {httpOnly: true},
         key: "orchastrator"
     }));
 
