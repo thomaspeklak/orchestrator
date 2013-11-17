@@ -47,17 +47,27 @@ module.exports = function (server) {
 
             if (stream.meta == "verify") {
                 stream.once("data", function verify(data) {
-                    var sessionCookie = cookieSignature.unsign(data.replace(/.*?:/, ""), config.secret);
-                    if (!sessionCookie) {
+                    var token = cookieSignature.unsign(data.replace(/.*?:/, ""), config.secret);
+                    if (!token) {
+                        console.log("no active session");
                         stream.end(new Error("no active session"));
                     }
 
-                    db.sessions.get(sessionCookie, function (err, data) {
-                        if (err || !data.passport || !data.passport.user) {
-                            return mdm.end(err.message);
+                    db.tokens.get(token, function (err, data) {
+                        if (err || !data.user) {
+                            console.log("token not found");
+                            return mdm.end();
                         }
 
-                        user = data.passport.user;
+                        db.tokens.del(token);
+
+                        var currentTime = new Date().getTime();
+                        if (data.expires < currentTime) {
+                            console.log("token expired");
+                            return mdm.end();
+                        }
+
+                        user = data.user;
                         stream.write("verified");
                     });
                 });

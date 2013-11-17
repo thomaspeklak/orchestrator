@@ -18,6 +18,19 @@ var app = express();
 
 app.passport = passport;
 
+//CORS middleware
+var allowCrossDomain = function(req, res, next) {
+    res.header("Access-Control-Allow-Credentials", true);
+    res.header("Access-Control-Allow-Origin", req.headers.origin);
+    res.header("Access-Control-Allow-Methods", "OPTIONS, GET, POST");
+    res.header("Access-Control-Allow-Headers", "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version");
+
+    if (req.method!="OPTIONS") return next();
+
+    res.send(204);
+};
+
+
 // Express settings
 app.disable("x-powered-by");
 
@@ -27,6 +40,7 @@ app.configure("development", function () {
         dumpExceptions: true,
         showStack: true
     }));
+    app.use(allowCrossDomain);
 });
 
 app.configure("production", function () {
@@ -48,10 +62,10 @@ app.configure(function () {
     app.use(express.cookieParser(config.secret));
 
     var levelDbStore = new LeveldbStore({
-            ttl: 60 * 60 * 24,
-            db: db.sessions,
-            prefix: false
-        });
+        ttl: 60 * 60 * 24,
+        db: db.sessions,
+        prefix: false
+    });
     levelDbStore.prefix = "";
     app.use(express.session({
         store: levelDbStore,

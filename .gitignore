@@ -5,3 +5,6 @@ db/orchastrator
 public/application-dev.js
 public/application.js
 public/application.min.js
+public/orchestrator-dev.js
+public/orchestrator.js
+public/orchestrator.min.js
