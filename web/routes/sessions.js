@@ -41,7 +41,7 @@ module.exports = function (app) {
         var token = uuid.v4();
         db.tokens.put(token, {
             user: req.user.email,
-            expires: new Date().getTime() + 1000
+            expires: new Date().getTime() + 5000
         }, function (err) {
             if (err) {
                 console.error(err);

@@ -18,6 +18,7 @@ LocationEventSynchronizer.prototype.register = function registerLocationEventSyn
 
 LocationEventSynchronizer.prototype.setInitalState = function (state) {
     if(location.href !== state.get("location")) {
+        state.set("interaction", false);
         state.set("location", location.href);
     }
 };

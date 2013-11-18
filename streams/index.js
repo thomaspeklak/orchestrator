@@ -26,6 +26,13 @@ function connectToStream(user, stream) {
             m.on("update", function () {
                 db.streams.put(user, m.toJSON(), logError);
             });
+
+            m.on("update", function (change) {
+                if (change[0] == "location") {
+                    m.set("scroll", [0,0]);
+                    m.set("interaction", false);
+                }
+            });
         }
 
         console.log("new browser attached");

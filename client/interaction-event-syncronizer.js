@@ -22,16 +22,14 @@ function InteractionEventSynchronizer(state) {
 
 InteractionEventSynchronizer.prototype.register = function registerInteractionEventSynchronizer(apply) {
     return apply("interaction", function (event) {
+        if (!event) return;
+
         var customEvent = new CustomEvent(event.type, {
             detail: {
                 synchronizationEvent: true
             }
         });
         var node = document.querySelector(event.selector);
-
-        if (node.nodeName == "A" && (node.href.length > 0 || node.href.substr(0) != "#")) {
-            return;
-        }
 
         if (node.dispatchEvent) {
             node.dispatchEvent(customEvent);
