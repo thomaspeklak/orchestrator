@@ -1,9 +1,7 @@
 "use strict";
 
 function LocationEventSynchronizer(state) {
-    if(location.href !== state.get("location")) {
-        state.set("location", location.href);
-    }
+    this.setInitalState(state);
 
     window.addEventListener("hashchange", function locationHashChanged() {
         state.set("location", location.href);
@@ -16,6 +14,12 @@ LocationEventSynchronizer.prototype.register = function registerLocationEventSyn
 
         location.href = value;
     });
+};
+
+LocationEventSynchronizer.prototype.setInitalState = function (state) {
+    if(location.href !== state.get("location")) {
+        state.set("location", location.href);
+    }
 };
 
 module.exports = LocationEventSynchronizer;

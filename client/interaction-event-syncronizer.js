@@ -29,6 +29,10 @@ InteractionEventSynchronizer.prototype.register = function registerInteractionEv
         });
         var node = document.querySelector(event.selector);
 
+        if (node.nodeName == "A" && (node.href.length > 0 || node.href.substr(0) != "#")) {
+            return;
+        }
+
         if (node.dispatchEvent) {
             node.dispatchEvent(customEvent);
         } else if (node.fireEvent) { // IE < 9
