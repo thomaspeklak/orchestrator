@@ -40,7 +40,6 @@ app.configure("development", function () {
         dumpExceptions: true,
         showStack: true
     }));
-    app.use(allowCrossDomain);
 });
 
 app.configure("production", function () {
@@ -76,6 +75,7 @@ app.configure(function () {
 
     app.use(passport.initialize());
     app.use(passport.session());
+    app.use(allowCrossDomain);
     app.use(app.router);
     app.use(express.static(path.join(__dirname, "..", "public")));
 });
