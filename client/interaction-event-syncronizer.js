@@ -15,7 +15,7 @@ function handleInteractionWrapper(state) {
 }
 
 function InteractionEventSynchronizer(state) {
-    ["click", "mouseover", "mouseout", "mousedown", "mouseup", "mouseenter", "mouseleave"].forEach(function (event) {
+    ["click", "mouseover", "mouseout", "mousedown", "mouseup", "mouseenter", "mouseleave", "keypress"].forEach(function (event) {
         document.body.addEventListener(event, handleInteractionWrapper(state), true);
     });
 }

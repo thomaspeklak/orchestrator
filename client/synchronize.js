@@ -4,6 +4,7 @@ var EventSynchronizer = require("./event-synchronizer");
 var ScrollEventSynchronizer = require("./scroll-event-synchronizer");
 var LocationEventSynchronizer = require("./location-event-synchronizer");
 var InteractionEventSynchronizer = require("./interaction-event-syncronizer");
+var FormSynchronizer = require("./form-synchronizer");
 
 var state = new Model();
 
@@ -17,5 +18,6 @@ module.exports = function synchronize(stream) {
     synchronizer.register(ScrollEventSynchronizer);
     synchronizer.register(LocationEventSynchronizer);
     synchronizer.register(InteractionEventSynchronizer);
+    synchronizer.register(FormSynchronizer);
 };
 
