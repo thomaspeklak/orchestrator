@@ -25,7 +25,6 @@ function connectToStream(user, stream) {
             m.on("end", function () {console.log("ended");});
 
             m.on("update", _.throttle(function () {
-                console.dir(m.toJSON());
                 db.streams.put(user, m.toJSON(), logError);
             }, 2000));
 
