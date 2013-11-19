@@ -19,15 +19,25 @@ window.addEventListener("resize", function resize() {
 
 function ScrollEventSynchronizer(state) {
     window.addEventListener("scroll", _.throttle(function () {
-        state.set("scroll", [window.scrollX / dimensions.width, window.scrollY / dimensions.height]);
+        var current = state.get("scroll");
+        var timestamp = new Date().getTime();
+
+        if (current.initiator != state.id && timestamp < current.timestamp + 100) return;
+
+        state.set("scroll", {
+            x: window.scrollX / dimensions.width,
+            y: window.scrollY / dimensions.height,
+            initiator: state.id,
+            timestamp: timestamp
+        });
     }, 10));
 }
 
 ScrollEventSynchronizer.prototype.register = function registerScrollEventSynchronizer(apply) {
     return apply("scroll", function (values) {
-        values[0] = Math.round(values[0] * dimensions.width);
-        values[1] = Math.round(values[1] * dimensions.height);
-        window.scrollTo.apply(window, values);
+        values.x = Math.round(values.x * dimensions.width);
+        values.y = Math.round(values.y * dimensions.height);
+        window.scrollTo(values.x, values.y);
     });
 };
 
