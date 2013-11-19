@@ -7,7 +7,7 @@ Synchronize browser window state accross multiple browsers and devices. Currentl
 This product is in an early stage, expect everything to change.
 
 
-#Installation and first steps
+##Installation and first steps
 
 ```bash
 #install dependencies
@@ -21,3 +21,7 @@ node .
 ```
 
 Then navigate to http://localhost:3000 and login with the user you just created. Go to http://localhost:3000/test.html. Then do the same in another browser or window and enjoy the synchronization.
+
+##Demo
+
+[![Orchestrator demo](http://img.youtube.com/vi/OxLSHA86M3s/0.jpg)](http://www.youtube.com/watch?v=OxLSHA86M3s&fmt=22)
