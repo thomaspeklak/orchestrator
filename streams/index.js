@@ -4,6 +4,7 @@ var shoe = require("shoe");
 var cookieSignature = require("cookie-signature");
 var Model = require("scuttlebutt/model");
 var muxDemux = require("mux-demux");
+var _ = require("lodash");
 
 var db = require("../db");
 var config = require("../config");
@@ -23,9 +24,10 @@ function connectToStream(user, stream) {
             streams[user] = m;
             m.on("end", function () {console.log("ended");});
 
-            m.on("update", function () {
+            m.on("update", _.throttle(function () {
+                console.dir(m.toJSON());
                 db.streams.put(user, m.toJSON(), logError);
-            });
+            }, 2000));
 
             m.on("update", function (change) {
                 if (change[0] == "location") {
