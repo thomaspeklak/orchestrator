@@ -1,6 +1,6 @@
 #Orchastrator
 
-Synchronize browser state. Currently implemented are scroll location and URL.
+Synchronize browser window state accross multiple browsers and devices. Currently implemented are scroll location, URL, mouse events and form changes.
 
 ##State
 
