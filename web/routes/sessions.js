@@ -4,14 +4,7 @@ var db = require("../../db");
 var uuid = require("node-uuid");
 var cookieSignature = require("cookie-signature");
 var config = require("../../config");
-
-function requireUser(req, res, next) {
-    if (!req.user) {
-        return res.send(401);
-    }
-
-    next();
-}
+var requireUser = require("../require-user");
 
 module.exports = function (app) {
     app.get("/", function (req, res) {

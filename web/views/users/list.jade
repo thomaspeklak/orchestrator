@@ -1,0 +1,26 @@
+extends ../layout
+
+block content
+    h1 Users
+    if info.length
+        p.info= info
+    if error.length
+        p.error= error
+    table
+        thead
+            tr
+                th User
+                th created
+                th modified
+                th admin
+        for user in users
+            tr
+                td=user.email
+                td=user.createdDate
+                td=user.modifiedDate
+                td=user.data.admin?"yes" : "no"
+                td
+                    form(action="/admin/users/#{encodeURIComponent(user.email)}", method="POST")
+                        input(type="hidden", name="_method", value="DELETE")
+                        input(type="submit", value="Delete")
+    a(href="/admin/users/add") Add user

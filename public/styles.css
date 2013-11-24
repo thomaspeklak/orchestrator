@@ -70,3 +70,15 @@ label, input {
     padding: 5px;
     margin: 5px 0;
 }
+
+.error:after{
+    color: red;
+    font-weight: bold;
+    display: block;
+}
+.error.required:after{
+    content: "This field is required";
+}
+.error.length:after{
+    content: "Minimum length is 8 characters";
+}

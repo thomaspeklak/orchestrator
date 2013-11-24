@@ -1,0 +1,12 @@
+extends ../layout
+
+block content
+    h1 Add user
+    form(action="/admin/users", method="POST")
+        p(class=errors.email?"error " + errors.email : ""): label Email
+            input(name="email", type="email", required, value=values.email)
+        p(class=errors.password?"error " + errors.password : ""): label Password
+            input(name="password", type="password", required, value=values.password)
+        p: label Admin
+            input(type="checkbox", name="admin", checked=values.admin)
+        p: input(type="submit", value="Add user")
