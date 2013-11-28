@@ -34,6 +34,8 @@ function connectToStream(user, stream) {
                     m.set("interaction", false);
                 }
             });
+        } else {
+            m.set("interaction", false);
         }
 
         console.log("new browser attached");
