@@ -1,6 +1,6 @@
 "use strict";
 
-var shoe = require("shoe");
+var engine = require("engine.io-stream");
 var cookieSignature = require("cookie-signature");
 var Model = require("scuttlebutt/model");
 var muxDemux = require("mux-demux");
@@ -47,7 +47,7 @@ function connectToStream(user, stream) {
 }
 
 module.exports = function (server) {
-    var sock = shoe(function (stream) {
+    var sock = engine(function (stream) {
         var user;
         var mdm = muxDemux(function (stream) {
             if (stream.meta == "model") {
@@ -85,5 +85,5 @@ module.exports = function (server) {
         });
         mdm.pipe(stream).pipe(mdm);
     });
-    sock.install(server, "/socket");
+    sock.attach(server, "/socket");
 };

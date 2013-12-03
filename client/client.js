@@ -1,7 +1,8 @@
 "use strict";
 var synchronize = require("./synchronize");
-var shoe = require("shoe");
+var engine = require("engine.io-stream");
 var muxDemux = require("mux-demux");
+var url = require("url");
 
 var script = Array.prototype.filter.call(document.querySelectorAll("script"), function (script) {
     return script.src.match(/orchestrator(?:\.min|-dev)?.js/);
@@ -10,6 +11,7 @@ var script = Array.prototype.filter.call(document.querySelectorAll("script"), fu
 if (!script.length) return;
 
 var domain = script[0].src.replace(/orchestrator(?:\.min|-dev)?\.js/,"");
+var location = url.parse(domain);
 
 function getToken(cb) {
     var xhr = new XMLHttpRequest();
@@ -30,7 +32,7 @@ function getToken(cb) {
 }
 
 function connect(token) {
-    var stream = shoe(domain + "socket");
+    var stream = engine({hostname: location.domain, port: location.port, path: "/socket"});
     var mdm = muxDemux();
 
     stream.pipe(mdm).pipe(stream);
